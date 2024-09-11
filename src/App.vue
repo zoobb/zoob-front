@@ -2,15 +2,20 @@
 import { ref } from 'vue';
 import axios from 'axios';
 
-const data = ref();
-const error = ref();
+const fetchedData = ref();
+const fetchedError = ref();
+const dataToSend = ref();
 
 const fetchData = async () => {
   try {
-    const res = await axios.get(`http://${document.location.hostname}:8247`);
-    data.value = res.data;
+    const res = await axios.post(`http://${document.location.hostname}:8247`, {
+      params: {
+        userData: dataToSend.value,
+      }
+    });
+    fetchedData.value = res.data;
   } catch (err) {
-    error.value = `There was a problem fetching data: ${err}`;
+    fetchedError.value = `There was a problem fetching data: ${err}`;
   }
 };
 </script>
@@ -18,11 +23,12 @@ const fetchData = async () => {
 <template>
   <div class="main">
     <h1>Input your text</h1>
-    <input class="your-text" type="text">
+    <input class="your-text" type="text" v-model="dataToSend">
     <button class="random-number" type="button" @click="fetchData">
       Get random number
     </button>
-    <span v-if="data">{{ data }}</span>
+    <span v-if="fetchedData">{{ fetchedData }}</span>
+    <span>{{ dataToSend }}</span>
   </div>
 </template>
 
