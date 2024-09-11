@@ -7,7 +7,7 @@ const error = ref();
 
 const fetchData = async () => {
   try {
-    const res = await axios.get(`https://${document.location.hostname}:8247`);
+    const res = await axios.get(`http://${document.location.hostname}:8247`);
     data.value = res.data;
   } catch (err) {
     error.value = `There was a problem fetching data: ${err}`;
@@ -22,7 +22,7 @@ const fetchData = async () => {
     <button class="random-number" type="button" @click="fetchData">
       Get random number
     </button>
-    <span v-if="data"></span>
+    <span v-if="data">{{ data }}</span>
   </div>
 </template>
 
