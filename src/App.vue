@@ -27,8 +27,8 @@ const fetchData = async () => {
     <button class="random-number" type="button" @click="fetchData">
       Get random number
     </button>
-    <span v-if="fetchedData">{{ fetchedData }}</span>
-    <span>{{ dataToSend }}</span>
+    <span v-if="fetchedData">Fetched data: {{ fetchedData }}</span>
+    <span>Data to send: {{ dataToSend }}</span>
   </div>
 </template>
 
