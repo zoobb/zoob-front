@@ -1,15 +1,20 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import axios from "axios";
 
-const todoList = ref([]);
-const newListItem = ref("");
+const todoList = ref<String[]>([]);
+const newListItem = ref<String>("");
 
-const addToList = (listItem) => {
-  todoList.value.push(listItem);
+const sendListItem = async () => {
+  try {
+    const res = await axios.post(`http://${document.location.hostname}:8247/list`, {
+      listItem: newListItem.value
+    });
+    console.log(newListItem.value);
+  } catch (err) {
+    console.log(`There was a problem fetching data: ${err}`);
+  }
 };
-const removeFromList = () => {
-  todoList.value.pop()
-}
 </script>
 
 <template>
@@ -19,14 +24,17 @@ const removeFromList = () => {
     </router-link>
   </button>
   <div class="todo">
+    <h1 class="todo-header">
+      Todo List
+    </h1>
     <div class="todo-input">
       <input type="text" v-model="newListItem">
-      <button type="submit" @click="addToList(newListItem)">Add to list</button>
+      <button type="submit" @click="sendListItem">Add to list</button>
     </div>
     <div class="todo-list">
       <div v-for="(item, index) in todoList" key="index">
         <span class="todo-list-item">{{ index + 1 }}: {{ item }}</span>
-        <button class="todo-list-remove" @click="removeFromList">Remove</button>
+        <button class="todo-list-remove">Remove</button>
       </div>
     </div>
   </div>
