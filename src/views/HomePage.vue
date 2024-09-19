@@ -8,10 +8,8 @@ const dataToSend = ref();
 
 const fetchData = async () => {
   try {
-    const res = await axios.post(`http://${document.location.hostname}:8247`, {
-      params: {
-        userData: dataToSend.value,
-      }
+    const res = await axios.post(`http://${document.location.hostname}:8247/ping`, {
+        user_data: dataToSend.value
     });
     fetchedData.value = res.data;
   } catch (err) {

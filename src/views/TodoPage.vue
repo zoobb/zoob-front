@@ -2,19 +2,40 @@
 import { ref } from 'vue'
 import axios from "axios";
 
-const todoList = ref<String[]>([]);
+type ListItem = {
+  item_id: number;
+  content: string;
+}
+
+type TodoList = {
+  Items: ListItem[]
+}
+
+const todoList = ref<TodoList>({
+  Items: [],
+});
 const newListItem = ref<String>("");
 
 const sendListItem = async () => {
   try {
     const res = await axios.post(`http://${document.location.hostname}:8247/list`, {
-      listItem: newListItem.value
+      user_data: newListItem.value
     });
-    console.log(newListItem.value);
+    // console.log(newListItem.value);
+    todoList.value = await getWholeList()
+    console.log(todoList.value)
   } catch (err) {
     console.log(`There was a problem fetching data: ${err}`);
   }
 };
+const getWholeList = async () => {
+  try {
+    const res = await axios.get(`http://${document.location.hostname}:8247/list`)
+    return res.data;
+  } catch (err) {
+    console.log(`There was a problem fetching data: ${err}`);
+  }
+}
 </script>
 
 <template>
@@ -32,8 +53,8 @@ const sendListItem = async () => {
       <button type="submit" @click="sendListItem">Add to list</button>
     </div>
     <div class="todo-list">
-      <div v-for="(item, index) in todoList" key="index">
-        <span class="todo-list-item">{{ index + 1 }}: {{ item }}</span>
+      <div v-for="(item, index) in todoList.Items" :key="item.item_id">
+        <span class="todo-list-item">{{ item.item_id }}: {{ item.content }}</span>
         <button class="todo-list-remove">Remove</button>
       </div>
     </div>
