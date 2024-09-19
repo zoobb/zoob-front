@@ -53,8 +53,8 @@ const getWholeList = async () => {
       <button type="submit" @click="sendListItem">Add to list</button>
     </div>
     <div class="todo-list">
-      <div v-for="(item, index) in todoList.Items" :key="item.item_id">
-        <span class="todo-list-item">{{ item.item_id }}: {{ item.content }}</span>
+      <div class="todo-list-item" v-for="(item, index) in todoList.Items" :key="item.item_id">
+        <span class="todo-list-item-content">{{ item.item_id + 1 }}: {{ item.content }}</span>
         <button class="todo-list-remove">Remove</button>
       </div>
     </div>
@@ -62,6 +62,10 @@ const getWholeList = async () => {
 </template>
 
 <style scoped lang="scss">
+/** {
+  border: 1px solid #ccc;
+}*/
+
 .todo {
   display: flex;
   flex-direction: column;
@@ -84,5 +88,9 @@ const getWholeList = async () => {
   gap: 0.5rem;
 }
 .todo-list-item {
+  display: flex;
+  justify-content: space-between;
+}
+.todo-list-item-content {
 }
 </style>
