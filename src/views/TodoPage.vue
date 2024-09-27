@@ -16,25 +16,44 @@ const todoList = ref<TodoList>({
 });
 const newListItem = ref<String>("");
 
-const sendListItem = async () => {
+const addListItem = async () => {
   try {
     const res = await axios.post(`http://${document.location.hostname}:8247/list`, {
-      user_data: newListItem.value
+      user_data: newListItem.value,
     });
     // console.log(newListItem.value);
-    todoList.value = await getWholeList()
-    console.log(todoList.value)
+    await updateList();
+    console.log(todoList.value);
   } catch (err) {
     console.log(`There was a problem fetching data: ${err}`);
   }
 };
-const getWholeList = async () => {
+const getList = async () => {
   try {
-    const res = await axios.get(`http://${document.location.hostname}:8247/list`)
+    const res = await axios.get(`http://${document.location.hostname}:8247/list`);
     return res.data;
   } catch (err) {
     console.log(`There was a problem fetching data: ${err}`);
   }
+}
+const deleteList = async () => {
+  try {
+    const res = await axios.delete(`http://${document.location.hostname}:8247/list`);
+    await updateList();
+  } catch (err) {
+    console.log(`There was a problem fetching data: ${err}`);
+  }
+}
+const deleteListItem = async (id: number) => {
+  try {
+    const res = await axios.delete(`http://${document.location.hostname}:8247/list/${id}`);
+    await updateList();
+  } catch (err) {
+    console.log(`There was a problem fetching data: ${err}`);
+  }
+}
+const updateList = async () => {
+  todoList.value.Items = await getList()
 }
 </script>
 
@@ -50,12 +69,17 @@ const getWholeList = async () => {
     </h1>
     <div class="todo-input">
       <input type="text" v-model="newListItem">
-      <button type="submit" @click="sendListItem">Add to list</button>
+      <button type="submit" @click="addListItem">Add to list</button>
+      <button @click="deleteList">Delete</button>
     </div>
     <div class="todo-list">
-      <div class="todo-list-item" v-for="(item, index) in todoList.Items" :key="item.item_id">
-        <span class="todo-list-item-content">{{ item.item_id + 1 }}: {{ item.content }}</span>
-        <button class="todo-list-remove">Remove</button>
+      <div class="todo-list-item" v-for="(item, index) in todoList.Items" :key="index">
+        <span class="todo-list-item-content">{{ index + 1 }}: {{ item.content }}</span>
+        <div class="todo-list-item-buttons">
+          <button class="todo-list-remove" :id="`list-remove-button-${item.item_id}`"
+                  @click="deleteListItem(item.item_id)">Remove
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -90,7 +114,11 @@ const getWholeList = async () => {
 .todo-list-item {
   display: flex;
   justify-content: space-between;
+  gap: 1rem;
 }
 .todo-list-item-content {
+}
+.todo-list-item-buttons {
+
 }
 </style>
