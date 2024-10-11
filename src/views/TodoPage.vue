@@ -3,6 +3,7 @@ import {onMounted} from 'vue';
 import {useListStore} from '../store/list.ts';
 import {animateListEnter, animateListLeave} from '../components/animations.ts';
 import ListHeader from '../components/ListHeader.vue';
+import HomeButton from '../components/HomeButton.vue';
 
 const listStore = useListStore();
 
@@ -12,11 +13,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <button>
-    <router-link to="/">
-      Home
-    </router-link>
-  </button>
+  <home-button/>
   <div class="todo">
     <list-header/>
     <div class="todo-input">
