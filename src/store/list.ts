@@ -1,15 +1,16 @@
 import {defineStore} from 'pinia';
 import {ref} from 'vue';
 import {Http} from '../api/http.ts';
+import {TodoList} from '../types.ts';
 
-interface ListItem {
-  item_id: number;
-  content: string;
-}
-
-interface TodoList {
-  Items: ListItem[]
-}
+// interface ListItem {
+//   item_id: number;
+//   content: string;
+// }
+//
+// interface TodoList {
+//   Items: ListItem[]
+// }
 
 export const useListStore = defineStore('listStore', () => {
   const client = new Http({
