@@ -5,6 +5,8 @@ import {animateListEnter, animateListLeave} from '../components/animations.ts';
 import ListHeader from '../components/ListHeader.vue';
 import HomeButton from '../components/HomeButton.vue';
 import DeleteListItemButton from '../components/DeleteListItemButton.vue';
+import ListItemContent from '../components/ListItemContent.vue';
+import ListItemButtons from '../components/ListItemButtons.vue';
 
 const listStore = useListStore();
 
@@ -40,31 +42,17 @@ onMounted(() => {
         >
         <div
             class="todo-list-item"
-            v-for="(item, index) in listStore.list.Items"
+            v-for="item in listStore.list.Items"
             :key="item.item_id"
             ref="todoItems"
         >
-          <div :id="`todo-list-item-content-${item.item_id}`">
-            <span
-                v-if="listStore.bufferID !== item.item_id"
-                class="todo-list-item-content"
-                @click="listStore.editBuffer(item.item_id, item.content)"
-            >
-              {{ index + 1 }}: {{ item.content }}
-            </span>
-            <input
-                v-else
-                v-model="listStore.bufferContent"
-                @blur="listStore.updateListItem(item.item_id, listStore.bufferContent)"
-                @keyup.enter="listStore.updateListItem(item.item_id, listStore.bufferContent)"
-                type="text"
-            />
-          </div>
-          <div class="todo-list-item-buttons">
-            <delete-list-item-button
-                :item_id="item.item_id"
-            />
-          </div>
+          <list-item-content
+              :content="item.content"
+              :item_id="item.item_id"
+          />
+          <list-item-buttons
+              :item_id="item.item_id"
+          />
         </div>
         </transition-group>
       </div>
