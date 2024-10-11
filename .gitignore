@@ -23,4 +23,4 @@ Dockerfile
 *.njsproj
 *.sln
 *.sw?
-!/nginx.conf
+/nginx.conf
