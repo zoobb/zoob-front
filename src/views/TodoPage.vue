@@ -3,8 +3,8 @@ import {onMounted} from 'vue';
 import {useListStore} from '../store/list.ts';
 import ListHeader from '../components/ListHeader.vue';
 import HomeButton from '../components/HomeButton.vue';
-import ListItems from '../components/ListItems.vue';
 import DeleteListButton from '../components/DeleteListButton.vue';
+import TodoList from '../components/TodoList.vue';
 
 const listStore = useListStore();
 
@@ -31,9 +31,7 @@ onMounted(() => {
       </button>
       <delete-list-button/>
     </div>
-      <div class="todo-list">
-        <list-items/>
-      </div>
+    <todo-list/>
   </div>
 </template>
 
