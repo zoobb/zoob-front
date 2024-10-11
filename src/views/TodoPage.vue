@@ -1,13 +1,10 @@
 <script setup lang="ts">
 import {onMounted} from 'vue';
 import {useListStore} from '../store/list.ts';
-import {animateListEnter, animateListLeave} from '../components/animations.ts';
 import ListHeader from '../components/ListHeader.vue';
 import HomeButton from '../components/HomeButton.vue';
-import DeleteListItemButton from '../components/DeleteListItemButton.vue';
-import ListItemContent from '../components/ListItemContent.vue';
-import ListItemButtons from '../components/ListItemButtons.vue';
-import ListItem from '../components/ListItem.vue';
+import ListItems from '../components/ListItems.vue';
+import DeleteListButton from '../components/DeleteListButton.vue';
 
 const listStore = useListStore();
 
@@ -32,10 +29,10 @@ onMounted(() => {
       >
         Add to list
       </button>
-      <button @click="listStore.deleteList">Delete</button>
+      <delete-list-button/>
     </div>
       <div class="todo-list">
-        <list-item/>
+        <list-items/>
       </div>
   </div>
 </template>
