@@ -2,6 +2,7 @@
 import {onMounted} from 'vue';
 import {useListStore} from '../store/list.ts';
 import {animateListEnter, animateListLeave} from '../components/animations.ts';
+import ListHeader from '../components/ListHeader.vue';
 
 const listStore = useListStore();
 
@@ -17,9 +18,7 @@ onMounted(() => {
     </router-link>
   </button>
   <div class="todo">
-    <h1 class="todo-header">
-      Zoob List
-    </h1>
+    <list-header/>
     <div class="todo-input">
       <input
           type="text"
