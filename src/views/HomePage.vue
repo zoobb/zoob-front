@@ -2,31 +2,43 @@
 import { ref } from 'vue';
 import axios from 'axios';
 
-const fetchedData = ref();
-const fetchedError = ref();
-const dataToSend = ref();
+const login = ref<string>();
+const pass = ref<string>();
 
-const fetchData = async () => {
+const signUp = async () => {
   try {
-    const res = await axios.post(`http://${document.location.hostname}:8247/ping`, {
-        user_data: dataToSend.value
+    await axios.post(`http://${document.location.hostname}:8247/auth/sign_up`, {
+      'login': login.value,
+      'pass': pass.value
     });
-    fetchedData.value = res.data;
   } catch (err) {
-    fetchedError.value = `There was a problem fetching data: ${err}`;
+    console.log(`There was a problem fetching data: ${err}`);
   }
 };
+const logIn = async () => {
+  try {
+    await axios.post(`http://${document.location.hostname}:8247/auth/log_in`, {
+      'login': login.value,
+      'pass': pass.value
+    });
+  } catch (err) {
+    console.log(`There was a problem fetching data: ${err}`);
+  }
+};
+
 </script>
 
 <template>
   <div class="main">
-    <h1>Input your text</h1>
-    <input class="your-text" type="text" v-model="dataToSend">
-    <button class="random-number" type="button" @click="fetchData">
-      Get random number
-    </button>
-    <span v-if="fetchedData">Fetched data: {{ fetchedData }}</span>
-    <span>Data to send: {{ dataToSend }}</span>
+    <h1>Authorization</h1>
+    <div class="auth">
+      <span class="login-header">Login</span>
+      <input v-model="login" type="text" class="login-input">
+      <span class="pass-header">Password</span>
+      <input v-model="pass" type="text" class="pass-input">
+      <button class="sign-in" @click="signUp">Sign in</button>
+      <button class="log-in" @click="logIn">Log in</button>
+    </div>
     <button>
       <router-link to="/todo">Todo List</router-link>
     </button>
@@ -43,5 +55,19 @@ const fetchData = async () => {
 .your-text {
   height: 2rem;
   font-size: 1.2rem;
+}
+
+.auth {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin: 1rem;
+  padding: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 0.5rem;
+}
+
+.login-header .pass-header {
+  font-size: 5rem;
 }
 </style>
