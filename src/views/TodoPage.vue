@@ -6,6 +6,7 @@ import HomeButton from '../components/HomeButton.vue';
 import DeleteListButton from '../components/DeleteListButton.vue';
 import TodoList from '../components/TodoList.vue';
 import AddToListButton from '../components/AddToListButton.vue';
+import ListInput from '../components/ListInput.vue';
 
 const listStore = useListStore();
 
@@ -19,11 +20,7 @@ onMounted(() => {
   <div class="todo">
     <list-header/>
     <div class="todo-input">
-      <input
-          type="text"
-          v-model="listStore.newListItem"
-          @keyup.enter="listStore.addListItem(listStore.newListItem)"
-      >
+      <list-input/>
       <add-to-list-button/>
       <delete-list-button/>
     </div>
