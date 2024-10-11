@@ -7,6 +7,7 @@ import HomeButton from '../components/HomeButton.vue';
 import DeleteListItemButton from '../components/DeleteListItemButton.vue';
 import ListItemContent from '../components/ListItemContent.vue';
 import ListItemButtons from '../components/ListItemButtons.vue';
+import ListItem from '../components/ListItem.vue';
 
 const listStore = useListStore();
 
@@ -34,27 +35,7 @@ onMounted(() => {
       <button @click="listStore.deleteList">Delete</button>
     </div>
       <div class="todo-list">
-        <transition-group
-            tag="div"
-            :css="false"
-            @enter="animateListEnter"
-            @leave="animateListLeave"
-        >
-        <div
-            class="todo-list-item"
-            v-for="item in listStore.list.Items"
-            :key="item.item_id"
-            ref="todoItems"
-        >
-          <list-item-content
-              :content="item.content"
-              :item_id="item.item_id"
-          />
-          <list-item-buttons
-              :item_id="item.item_id"
-          />
-        </div>
-        </transition-group>
+        <list-item/>
       </div>
   </div>
 </template>
