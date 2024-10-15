@@ -47,21 +47,4 @@ onMounted(() => {
   margin: 0.2rem;
   padding: 0.2rem;
 }
-.todo-list {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  justify-content: center;
-  gap: 0.5rem;
-}
-.todo-list-item {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-}
-.todo-list-item-content {
-}
-.todo-list-item-buttons {
-
-}
 </style>
